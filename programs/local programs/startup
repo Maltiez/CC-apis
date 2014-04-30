@@ -2,7 +2,7 @@ local tConst=http.get('https://raw.githubusercontent.com/Maltiez/CC-apis/master/
 if not fs.exists('apis') then
 	fs.makeDir('apis')
 end
-local fConst=fs.open('apis/const',w)
+local fConst=fs.open('apis/const','w')
 fConst.write(tConst.readAll())
 fConst.close()
 tConst.close()
@@ -10,7 +10,7 @@ local tAdv=http.get('https://raw.githubusercontent.com/Maltiez/CC-apis/master/ap
 if not fs.exists('apis') then
 	fs.makeDir('apis')
 end
-local fAdv=fs.open('apis/adv',w)
+local fAdv=fs.open('apis/adv','w')
 fAdv.write(tAdv.readAll())
 fAdv.close()
 tAdv.close()

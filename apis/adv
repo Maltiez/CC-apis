@@ -1,5 +1,5 @@
 --Api универсальный--
-version='0.3.9'
+version='0.4.0'
 --UNIVERSAL--
 --Доп.функции--
 function startSession()
@@ -49,6 +49,22 @@ function getMess(id,addValue)--Функция приема сообщения: id - адресант, addValue
 			end
 		end
 	end
+end
+function getFile(id,name,addValue)
+	local stopReceiveing=false
+	while not stopReceiveing do
+		local input_id,mess=rednet.receive()
+		if input_id==id then 
+			stopReceiveing=true 
+		end
+	end
+	if not fs.isDir(addValue) then
+		fs.makeDir(addValue)
+	end
+	local f=fs.open(fs.combine(addValue,name),'w')
+	f.write(mess)
+	f.close()
+	return true
 end
 --TURTLE--
 --Внутренние функции (просто внутренние функции)--
@@ -642,7 +658,11 @@ function turn(direction,n)--Аргументы: direction - направление, n - угол на кото
 end
 --Функции для exec, x - массив!!!--
 function rnopen(x)
-	local d=x[1]
+	if type(x)=="table" then
+		local d=x[1]
+	else
+		local d=x
+	end
 	rednet.open(d)
 end
 function send(x)
@@ -660,10 +680,28 @@ function send(x)
 		rednet.send(id,mess)
 	end
 end
+function file(x)
+	if type(x)=="table" then
+		local id=x[1]
+		local name=x[2]
+		local dir=x[3]
+	else
+		local id=x
+		local name=x
+		local dir=nil
+	end
+	getFile(id,name,dir)
+end
 function forward(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	local success=true
 	if addValue2=='dig' then --Черепашка будет пытаться разрушить блоки пока не пройдет.
 		if not(type(addValue)=="number")then
@@ -723,9 +761,15 @@ function forward(x)
 	end
 end
 function back(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	local success=true
 	if addValue2=="move" then --Черепашка будет пытаться пройти.
 		if not(type(addValue)=="number")then
@@ -759,9 +803,15 @@ function back(x)
 	end
 end
 function up(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	local success=true
 	if addValue2=="dig" then
 		for i=1,addValue do
@@ -793,9 +843,15 @@ function up(x)
 	end
 end
 function down(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	local success=true
 	if addValue2=="dig" then
 		for i=1,addValue do
@@ -827,9 +883,15 @@ function down(x)
 	end
 end
 function right(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	if not(type(addValue)=="number")then
 		turtle.turnRight()
 		--turtleDir(turnDir("right",turtleDir()))
@@ -841,9 +903,15 @@ function right(x)
 	end
 end
 function left(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	if not(type(addValue)=="number")then
 		turtle.turnLeft()
 		--turtleDir(turnDir("left",turtleDir()))
@@ -855,9 +923,15 @@ function left(x)
 	end
 end
 function dig(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	if type(addValue3)=="number" then
 		turtle.select(addValue3)
 	end
@@ -903,9 +977,15 @@ function dig(x)
 	end
 end
 function place(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	if (addValue2==nil) or (addValue2=="") then
 		turtle.select(addValue)
 		if addValue3==nil then 
@@ -926,9 +1006,15 @@ function place(x)
 	end
 end
 function detect(x)
-	local addValue=x[2]
-	local addValue2=x[1]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[2]
+		local addValue2=x[1]
+		local addValue3=x[3]
+	else
+		local addValue=nil
+		local addValue2=x
+		local addValue3=nil
+	end
 	if (addValue==nil) or (addValue=="") then
 		rednet.send(addValue2,turtle.detect())
 	else
@@ -942,10 +1028,17 @@ function detect(x)
 	end
 end
 function compare(x)
-	local addValue=x[2]
-	local addValue2=x[3]
-	local addValue3=x[4]
-	local addValue4=x[1]
+	if type(x)=="table" then
+		local addValue=x[2]
+		local addValue2=x[3]
+		local addValue3=x[4]
+		local addValue4=x[1]
+	else
+		local addValue=nil
+		local addValue2=nil
+		local addValue3=nil
+		local addValue4=x
+	end
 	if (addValue2==nil) or (addValue2=="") then
 		turtle.select(addValue)
 		rednet.send(addValue4,turtle.compare())
@@ -966,9 +1059,15 @@ function compare(x)
 	end
 end
 function drop(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	if type(addValue2)=='table' then
 		if type(addValue3)=='table' then
 			for i=1,#addValue2 do
@@ -1023,9 +1122,15 @@ function drop(x)
 	end
 end
 function suck(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3] --Забирает предметы в слот addValue2 со стороны addValue
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end 
 	if (addValue==nil) or (addValue=="") then
 		turtle.select(addValue2)
 		turtle.suck()
@@ -1042,16 +1147,28 @@ function suck(x)
 	end
 end
 function refuel(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	turtle.select(addValue)
 	turtle.refuel(addValue2)
 end
 function get(x)
-	local addValue=x[2]
-	local addValue2=x[1]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[2]
+		local addValue2=x[1]
+		local addValue3=x[3]
+	else
+		local addValue=nil
+		local addValue2=x
+		local addValue3=nil
+	end
 	if (addValue==nil) or (addValue=="") then
 		local iCount,sCount=0,0
 		for i=1,16 do
@@ -1075,15 +1192,27 @@ function get(x)
 	end
 end
 function transfer(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	turtle.transferTo(addValue,addValue2)
 end
 function attack(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+		local addValue2=x[2]
+		local addValue3=x[3]
+	else
+		local addValue=x
+		local addValue2=nil
+		local addValue3=nil
+	end
 	if (addValue==nil) or (addValue=="") then
 		turtle.attack()
 	else
@@ -1097,10 +1226,20 @@ function attack(x)
 	end
 end
 function craft(x)
-	local addValue=x[1]
-	local addValue2=x[2]
-	local addValue3=x[3]
+	if type(x)=="table" then
+		local addValue=x[1]
+	else
+		local addValue=x
+	end
 	turtle.craft(addValue)
+end
+function run(x)
+	if type(x)=="table" then
+		local path=x[1]
+	else
+		local path=x
+	end
+	shell.run(path)
 end
 --Функции направления--
 function dir(dir) --Записывает направление dir, или возвращает его если dir=nil.
