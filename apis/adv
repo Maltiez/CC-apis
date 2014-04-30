@@ -1,5 +1,5 @@
 --Api универсальный--
-version='0.4.0'
+version='0.4.1'
 --UNIVERSAL--
 --Доп.функции--
 function startSession()
@@ -1235,11 +1235,10 @@ function craft(x)
 end
 function run(x)
 	if type(x)=="table" then
-		local path=x[1]
+		shell.run(x[1])
 	else
-		local path=x
+		shell.run(x)
 	end
-	shell.run(path)
 end
 --Функции направления--
 function dir(dir) --Записывает направление dir, или возвращает его если dir=nil.
