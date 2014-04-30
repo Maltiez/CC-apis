@@ -1,0 +1,13 @@
+if fs.exists("disk/apis") then
+	local tApis = fs.list( "disk/apis" )
+	for n,sFile in ipairs( tApis ) do
+		if string.sub( sFile, 1, 1 ) ~= "." then
+			local sPath = fs.combine( "disk/apis", sFile )
+			local sPath2 = fs.combine( "apis", sFile )
+			if fs.isDir( 'apis' )==false then
+				fs.makeDir( 'apis' )
+			end	
+			fs.copy( sPath , sPath2 )
+		end
+	end
+end

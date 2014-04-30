@@ -1,0 +1,13 @@
+local rs=peripheral.wrap('back')
+local tLight={18432,16384,0,['off']=18433}
+local tPrint={'Light level: 1','Light level: 2','Light level: 3',['off']='Light level: off'}
+while true do
+	local input=read()
+	if (input=='off') or (input=='1') or (input=='2') or (input=='3') or (input==1) or (input==2) or (input==3) then
+		if not(input=='off') then input=tonumber(input) end
+		rs.setBundledOutput(tLight[input])
+		term.clear()
+		term.setCursorPos(1,1)
+		print(tPrint[input])
+	end
+end

@@ -1,0 +1,42 @@
+--Константы и ф-ции работы с ними--
+version='1.2'
+--Map--
+ChunkSize=64
+MaxMapSize=67108865--(2^26+1 - четыре региона)
+MapsPathNoSlash="maps"
+MapsPath=MapsPathNoSlash.."/"
+mapColor={}
+mapColor[0]=black --неизвестный блок/воздух
+mapColor[1]=white --блок
+--Цвета--
+white = 1
+orange = 2
+magenta = 4
+lightBlue = 8
+yellow = 16
+lime = 32
+pink = 64
+gray = 128
+lightGray = 256
+cyan = 512
+purple = 1024
+blue = 2048
+brown = 4096
+green = 8192
+red = 16384
+black = 32768
+--Adv--
+messIDLim1=100000000 --Нижняя граница рандомной генерации ID сообщения
+messIDLim2=999999999 --Верхняя граница рандомной генерации ID сообщения
+messIDLimAdd=9 --Кол-во знаков ID сообщения
+waitLim=10 --Таймаут для advcomm.sendMess
+messBegining='mess #' --Начало сообщения
+forbiddenZoneList='forbiddenZoneList.txt'
+--Adv - Направления--
+dirUnknown="0"
+dirEast="1" -- OX+
+dirNorth="2" -- OY+
+dirWest="-1" -- OX-
+dirSouth="-2" -- OY-
+--Константы взаимодействия--
+SFile="File sending."
