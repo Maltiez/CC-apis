@@ -1,4 +1,3 @@
-
 local sPath = ".:/rom/programs"
 if turtle then
 	sPath = sPath..":/rom/programs/turtle"

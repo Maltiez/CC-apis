@@ -1,0 +1,28 @@
+local tConst=http.get('https://raw.githubusercontent.com/Maltiez/CC-apis/master/apis/const')
+if not fs.exists('apis') then
+	fs.makeDir('apis')
+end
+local fConst=fs.open('apis/const',w)
+fConst.write(tConst.readAll())
+fConst.close()
+tConst.close()
+local tAdv=http.get('https://raw.githubusercontent.com/Maltiez/CC-apis/master/apis/adv')
+if not fs.exists('apis') then
+	fs.makeDir('apis')
+end
+local fAdv=fs.open('apis/adv',w)
+fAdv.write(tAdv.readAll())
+fAdv.close()
+tAdv.close()
+if fs.exists("apis/const") then os.loadAPI( 'apis/const' ) end
+if fs.exists("apis") then
+	local tApis = fs.list( "apis" )
+	for n,sFile in ipairs( tApis ) do
+		if string.sub( sFile, 1, 1 ) ~= "." then
+			local sPath = fs.combine( "apis", sFile )
+			if not fs.isDir( sPath ) then
+				os.loadAPI( sPath )
+			end
+		end
+	end
+end
