@@ -681,7 +681,7 @@ function send(x)
 		rednet.send(id,mess)
 	end
 end
-function file(x)
+function file(x,x_add_1,x_add_2)
 	local id,name,dir
 	if type(x)=="table" then
 		id=x[1]
@@ -689,12 +689,12 @@ function file(x)
 		dir=x[3]
 	else
 		id=x
-		name=x
-		dir=nil
+		name=x_add_1
+		dir=x_add_2
 	end
 	getFile(id,name,dir)
 end
-function forward(x)
+function forward(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -702,8 +702,8 @@ function forward(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	local success=true
 	if addValue2=='dig' then --„ерепашка будет пытатьс€ разрушить блоки пока не пройдет.
@@ -763,7 +763,7 @@ function forward(x)
 		end
 	end
 end
-function back(x)
+function back(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -771,8 +771,8 @@ function back(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	local success=true
 	if addValue2=="move" then --„ерепашка будет пытатьс€ пройти.
@@ -806,7 +806,7 @@ function back(x)
 		end
 	end
 end
-function up(x)
+function up(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -814,8 +814,8 @@ function up(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	local success=true
 	if addValue2=="dig" then
@@ -847,7 +847,7 @@ function up(x)
 		end
 	end
 end
-function down(x)
+function down(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -855,8 +855,8 @@ function down(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	local success=true
 	if addValue2=="dig" then
@@ -888,7 +888,7 @@ function down(x)
 		end
 	end
 end
-function right(x)
+function right(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -896,8 +896,8 @@ function right(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	if not(type(addValue)=="number")then
 		turtle.turnRight()
@@ -909,7 +909,7 @@ function right(x)
 		end
 	end
 end
-function left(x)
+function left(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -917,8 +917,8 @@ function left(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	if not(type(addValue)=="number")then
 		turtle.turnLeft()
@@ -930,7 +930,7 @@ function left(x)
 		end
 	end
 end
-function dig(x)
+function dig(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -938,8 +938,8 @@ function dig(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	if type(addValue3)=="number" then
 		turtle.select(addValue3)
@@ -985,7 +985,7 @@ function dig(x)
 		end
 	end
 end
-function place(x)
+function place(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -993,8 +993,8 @@ function place(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	if (addValue2==nil) or (addValue2=="") then
 		turtle.select(addValue)
@@ -1015,16 +1015,16 @@ function place(x)
 		end
 	end
 end
-function detect(x)
+function detect(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[2]
 		addValue2=x[1]
 		addValue3=x[3]
 	else
-		addValue=nil
+		addValue=x_add_1
 		addValue2=x
-		addValue3=nil
+		addValue3=x_add_2
 	end
 	if (addValue==nil) or (addValue=="") then
 		rednet.send(addValue2,turtle.detect())
@@ -1038,7 +1038,7 @@ function detect(x)
 		end
 	end
 end
-function compare(x)
+function compare(x,x_add_1,x_add_2,x_add_3)
 	local addValue,addValue2,addValue3,addValue4
 	if type(x)=="table" then
 		addValue=x[2]
@@ -1046,9 +1046,9 @@ function compare(x)
 		addValue3=x[4]
 		addValue4=x[1]
 	else
-		addValue=nil
-		addValue2=nil
-		addValue3=nil
+		addValue=x_add_1
+		addValue2=x_add_2
+		addValue3=x_add_3
 		addValue4=x
 	end
 	if (addValue2==nil) or (addValue2=="") then
@@ -1070,7 +1070,7 @@ function compare(x)
 		end
 	end
 end
-function drop(x)
+function drop(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -1078,8 +1078,8 @@ function drop(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	if type(addValue2)=='table' then
 		if type(addValue3)=='table' then
@@ -1134,7 +1134,7 @@ function drop(x)
 		end
 	end
 end
-function suck(x)
+function suck(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -1142,8 +1142,8 @@ function suck(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	if (addValue==nil) or (addValue=="") then
 		turtle.select(addValue2)
@@ -1160,7 +1160,7 @@ function suck(x)
 		end
 	end
 end
-function refuel(x)
+function refuel(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -1168,22 +1168,22 @@ function refuel(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	turtle.select(addValue)
 	turtle.refuel(addValue2)
 end
-function get(x)
+function get(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[2]
 		addValue2=x[1]
 		addValue3=x[3]
 	else
-		addValue=nil
+		addValue=x_add_1
 		addValue2=x
-		addValue3=nil
+		addValue3=x_add_2
 	end
 	if (addValue==nil) or (addValue=="") then
 		local iCount,sCount=0,0
@@ -1207,7 +1207,7 @@ function get(x)
 		end
 	end
 end
-function transfer(x)
+function transfer(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[1]
@@ -1215,8 +1215,8 @@ function transfer(x)
 		addValue3=x[3]
 	else
 		addValue=x
-		addValue2=nil
-		addValue3=nil
+		addValue2=x_add_1
+		addValue3=x_add_2
 	end
 	turtle.transferTo(addValue,addValue2)
 end
