@@ -5,7 +5,7 @@ version='0.4.3'
 function startSession()
 	term.clear()
 	term.setCursorPos(1,1)
-	print('ASF: adv='..version..'; const='..const.version..'; ID='..os.getComputerID())
+	print('ADV '..version..' ID: '..os.getComputerID())
 end
 --Функции связи--
 function sendMess(id,mess,addValue)--Функция отправки сообщения: id - адресат, mess - сообщение либо путь передаваемого файла, при addValue="file".
@@ -124,7 +124,7 @@ end
 --Функции действия--
 function exec(x) --Основная функция исполнения команд, x - массив команд.
 	if type(x[1])=='string' then
-		assert(loadstring('return '..x[1]..'(...)'))(x[2])
+		assert(loadstring('return '..x[1]..'(...)'))(x[2],x[3],x[4],x[5])
 	elseif type(x[1])=='function' then
 		x[1](x[2])
 	elseif type(x[1])=='number' then
