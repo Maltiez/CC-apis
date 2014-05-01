@@ -1,5 +1,5 @@
 --Api универсальный--
-version='0.4.1'
+version='0.4.2'
 --UNIVERSAL--
 --Доп.функции--
 function startSession()
@@ -656,7 +656,7 @@ function turn(direction,n)--Аргументы: direction - направление, n - угол на кото
 		end
 	end
 end
---Функции для exec, x - массив!!!--
+--Функции для exec--
 function rnopen(x)
 	if type(x)=="table" then
 		local d=x[1]
