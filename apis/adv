@@ -1,5 +1,5 @@
 --Api универсальный--
-version='0.4.4'
+version='0.4.5'
 --UNIVERSAL--
 --Доп.функции--
 function startSession()
@@ -136,8 +136,14 @@ function exec(x) --Основная функция исполнения команд, x - массив команд.
 	elseif type(x[1])=='function' then
 		x[1](x[2])
 	elseif type(x[1])=='number' then
-		for i=1,x[1] do
-			exec(x[2])
+		if x[1]<0 then
+			while true do
+				exec(x[2])
+			end
+		else
+			for i=1,x[1] do
+				exec(x[2])
+			end
 		end
 	elseif type(x[1])=='table' then
 		for i=1,#x do
