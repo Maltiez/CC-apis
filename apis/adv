@@ -1,5 +1,5 @@
 --Api универсальный--
-version='0.4.3'
+version='0.4.4'
 --UNIVERSAL--
 --Доп.функции--
 function startSession()
@@ -124,7 +124,15 @@ end
 --Функции действия--
 function exec(x) --Основная функция исполнения команд, x - массив команд.
 	if type(x[1])=='string' then
-		assert(loadstring('return '..x[1]..'(...)'))(x[2],x[3],x[4],x[5])
+		if x[1]=='if' then
+			if assert(loadstring('return '..x[2][1]..'(...)'))(x[2][2],x[2][3],x[2][4],x[2][5]) then
+				exec(x[3])
+			elseif type(x[4])=='table' then
+				exec(x[4])
+			end
+		else
+			assert(loadstring('return '..x[1]..'(...)'))(x[2],x[3],x[4],x[5])
+		end
 	elseif type(x[1])=='function' then
 		x[1](x[2])
 	elseif type(x[1])=='number' then
@@ -1015,7 +1023,7 @@ function place(x,x_add_1,x_add_2)
 		end
 	end
 end
-function detect(x,x_add_1,x_add_2)
+function detectSend(x,x_add_1,x_add_2)
 	local addValue,addValue2,addValue3
 	if type(x)=="table" then
 		addValue=x[2]
@@ -1038,7 +1046,28 @@ function detect(x,x_add_1,x_add_2)
 		end
 	end
 end
-function compare(x,x_add_1,x_add_2,x_add_3)
+function detect(x,x_add_1,x_add_2)
+	local addValue,addValue2,addValue3
+	if type(x)=="table" then
+		addValue=x[1]
+		addValue3=x[2]
+	else
+		addValue=x
+		addValue3=x_add_1
+	end
+	if (addValue==nil) or (addValue=="") then
+		return turtle.detect()
+	else
+		if addValue=="up" then
+			return turtle.detectUp()
+		else
+			if addValue=="down" then
+				return turtle.detectDown()
+			end
+		end
+	end
+end
+function compareSend(x,x_add_1,x_add_2,x_add_3)
 	local addValue,addValue2,addValue3,addValue4
 	if type(x)=="table" then
 		addValue=x[2]
@@ -1065,6 +1094,36 @@ function compare(x,x_add_1,x_add_2,x_add_3)
 			else
 				if addValue2=="to" then
 					rednet.send(addValue4,turtle.comapareTo(addValue3))
+				end
+			end
+		end
+	end
+end
+function compare(x,x_add_1,x_add_2)
+	local addValue,addValue2,addValue3,addValue4
+	if type(x)=="table" then
+		addValue=x[1]
+		addValue2=x[2]
+		addValue3=x[3]
+	else
+		addValue=x
+		addValue2=x_add_1
+		addValue3=x_add_2
+	end
+	if (addValue2==nil) or (addValue2=="") then
+		turtle.select(addValue)
+		return turtle.compare()
+	else
+		if addValue2=="up" then
+			turtle.select(addValue)
+			return turtle.comapareUp()
+		else
+			if addValue2=="down" then
+				turtle.select(addValue)
+				return turtle.comapareDown()
+			else
+				if addValue2=="to" then
+					return turtle.comapareTo(addValue3)
 				end
 			end
 		end
